@@ -1,0 +1,142 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/petehunt/node-jsx"
+
+    >node-jsx (v0.13.3)</a>
+</h1>
+<h4>transparently require() jsx from node</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.node-jsx">module node-jsx</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.node-jsx.install">
+            function <span class="apidocSignatureSpan">node-jsx.</span>install
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.node-jsx" id="apidoc.module.node-jsx">module node-jsx</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.node-jsx.install" id="apidoc.element.node-jsx.install">
+        function <span class="apidocSignatureSpan">node-jsx.</span>install
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function install(options) {
+  if (installed) {
+    return;
+  }
+
+  options = options || {};
+
+  // Import everything in the transformer codepath before we add the import hook
+  jstransform.transform(&#x27;&#x27;, options);
+
+  require.extensions[options.extension || &#x27;.js&#x27;] = function(module, filename) {
+    if (!options.hasOwnProperty(&#x22;react&#x22;))
+      options.react = true;
+
+    var src = fs.readFileSync(filename, {encoding: &#x27;utf8&#x27;});
+    if (typeof options.additionalTransform == &#x27;function&#x27;) {
+      src = options.additionalTransform(src);
+    }
+    try {
+      src = jstransform.transform(src, options).code;
+    } catch (e) {
+      throw new Error(&#x27;Error transforming &#x27; + filename + &#x27; to JS: &#x27; + e.toString());
+    }
+    module._compile(src, filename);
+  };
+
+  installed = true;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+# node-jsx
+
+Transparently `require()` jsx from node.
+
+## Usage
+
+`require(&#x27;node-jsx&#x27;).<span class="apidocCodeKeywordSpan">install</span>()`
+
+If you want to use a different extension, do:
+
+`require(&#x27;node-jsx&#x27;).install({extension: &#x27;.jsx&#x27;})`
+
+If you want to couple with an additional transform (such as CoffeeScript), do:
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
