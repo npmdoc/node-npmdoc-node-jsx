@@ -58,7 +58,8 @@
     "scripts": {
         "test": "jasmine-node node-jsx.spec.js"
     },
-    "version": "0.13.3"
+    "version": "0.13.3",
+    "bin": {}
 }
 ```
 
